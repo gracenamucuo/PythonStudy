@@ -318,15 +318,80 @@ def findMinAndMax(L):
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 >>> print([x * x for  x in range(1,11)])
 [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
->>>
+
+#***********************生成器(generator)***********************
+#一边循环一边计算的机制
+#将列表生成式的[]换为()就生成了一个生成器。
+next(generator)
+
+#杨辉三角
+def sec(n):
+    L = [1]
+    line = 1
+    while line <= n:
+        yield L
+        L = [1] + [L[i] + L[i+1] for i in range(len(L)-1)] + [1]
+        line = line + 1
+#***********************迭代器(iterator)***********************
+#可以被next()函数调用并不断返回下一个值的对象称为迭代器：Iterator。 表示一个惰性计算的序列
+isinstance([2,4],Iterable)#是否可迭代
+isinstance([2,4],Iterator)#是否是迭代器 生成器都是迭代器
+#***********************函数式编程***********************
+#高阶函数:可以接受函数作为参数的函数。
+def f(c):
+    return  c * c
+map(f,[1,3,4])#map函数接收一个函数，和一个可迭代的对象，会将f函数作用于该可迭代对象的所有元素中，最终生成一个list
+list(map(f,[1,3,4]))
+#reduce函数也接收两个参数，一个是函数，一个是序列，函数必须接受两个参数，reduce把结果继续和序列的下一个元素做累计计算。例如:reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)
+
+#数字字符串转数字
+ DIGITS = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
+ def str2int(s):
+    def fn(x,y):
+        return x * 10 + y
+    def char2num(s):
+        return DIGITS[s]
+    return reduce(fn,map(char2num,s))
+#首字母小写，其他大写
+L = ['adam', 'LISA', 'barT']
+def lowerFirst(L):
+    s1 = L[0]
+    s1 = s1.lower()
+    
+    s2 = L[1:]
+    s2 = s2.upper()
+    return s1 + s2
+
+print(list(map(lowerFirst,L)))
+
+from functools import reduce
+def pro(x,y):
+    return x * y
+
+reduce(pro(),[1,2,3,4,5])
 
 
+def f1(s):
+    i = 0
+    total = len(s)
+    a = True
+    while i < (total + 1) / 2:
+        if s[i] == s[total-i-1]:
+            a = True
+        else:
+            a = False
+                break;
+    return a
 
-
-
-
-
-
+>>> def f2(x):
+    s = str(x)
+    if f1(s):
+    return x
+SyntaxError: expected an indented block
+>>> def f2(x):
+    s = str(x)
+    if f1(s):
+        return x
 
 
 
